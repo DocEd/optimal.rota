@@ -6,7 +6,8 @@
 \usage{
 parse_preferences(
   file_path = NULL,
-  fellows = c("matt", "muska", "zainab", "dermot", "ed"),
+  fellows = c("matt", "muska", "zainab", "dermot", "ed", "justin", "paul"),
+  nhs = c(0, 0, 0, 1, 1, 0, 1),
   month = 1
 )
 }

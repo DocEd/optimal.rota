@@ -4,7 +4,7 @@
 \alias{fitness_func}
 \title{Fitness Function}
 \usage{
-fitness_func(x, days, pref_strong, pref_weak, pref_no, pref_bigno)
+fitness_func(x, days, pref_strong, pref_weak, pref_no, pref_bigno, nhs)
 }
 \arguments{
 \item{x}{}
@@ -18,6 +18,8 @@ fitness_func(x, days, pref_strong, pref_weak, pref_no, pref_bigno)
 \item{pref_no}{}
 
 \item{pref_bigno}{}
+
+\item{nhs}{}
 }
 \value{
 

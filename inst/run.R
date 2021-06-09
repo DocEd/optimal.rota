@@ -1,11 +1,18 @@
-df <- parse_preferences(file_path = "~/Documents/clinical/london_clinic/rota/2020/09/", month = 9)
-encode <- encode_preferences(df)
-solution <- solve(df, encode)
+# remotes::install_github("DocEd/optimal.rota")
+# library(optimal.rota)
 
-inspect_consec(solution, df)
+library(devtools)
+load_all()
 
-export("~/Documents/clinical/london_clinic/rota/2020/09/", df, solution)
+# 1. parse preferences
+rota <- fit_rota(
+  file_path = "~/Documents/clinical/london_clinic/rota/2021/07/",
+  fellows = c("matt", "muska", "zainab",
+              "dermot", "justin",
+              "paul"),
+  nhs = c(0, 0, 0, 1, 0, 1), 
+  month = 7)
 
-df$preferences %>%
-  mutate(assignment = df$fellows[df$days[solution@solution[1,]]]) %>%
-  write_csv(file.path(file_path, "allocation.csv"))
+check_fellow(rota, "paul")
+
+export("~/Documents/clinical/london_clinic/rota/2021/07/", rota, assign = 1)

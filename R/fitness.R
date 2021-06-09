@@ -6,12 +6,13 @@
 #' @param pref_weak 
 #' @param pref_no 
 #' @param pref_bigno 
+#' @param nhs
 #'
-#' @return
+#' @returns
 #' @export
 #'
 #' @examples
-fitness_func <- function(x, days, pref_strong, pref_weak, pref_no, pref_bigno) {
+fitness_func <- function(x, days, pref_strong, pref_weak, pref_no, pref_bigno, nhs) {
   
   d <- days[x]
   
@@ -22,7 +23,7 @@ fitness_func <- function(x, days, pref_strong, pref_weak, pref_no, pref_bigno) {
   } else {
     ans <- - n_consec^3 - 100
   }
-  
+
   # minimise strong anti-pref
   n_pref_bigno <- c_pref(d, pref_bigno)
   if (n_pref_bigno == 0) {
@@ -47,6 +48,10 @@ fitness_func <- function(x, days, pref_strong, pref_weak, pref_no, pref_bigno) {
   n_pref_strong <- c_pref(d, pref_strong)
   ans <- ans + n_pref_strong^2
 
+  # maximise NHS placements
+  n_pref_strong_nhs <- c_pref_nhs(d, pref_strong, nhs)
+  ans <- ans + n_pref_strong_nhs^3
+  
   return(ans)
 }
 
@@ -65,6 +70,28 @@ fitness_func <- function(x, days, pref_strong, pref_weak, pref_no, pref_bigno) {
 c_pref <- function(days, preferences) {
   # number of assignments in preferences
   map2_lgl(days, preferences, ~ .x %in% .y) %>%
+    sum()
+}
+
+
+#' Constraints: NHS
+#'
+#' @param days 
+#' @param preferences
+#' @param nhs
+#' 
+#' @importFrom purrr map2_lgl
+#' @importFrom magrittr `%>%`
+#'
+#' @return
+#' @export
+#'
+#' @examples
+c_pref_nhs <- function(days, preferences, nhs) {
+  # number of assignments in preferences
+  map2_lgl(days, preferences, function(x, y) {
+    x %in% y[y %in% nhs]
+  }) %>%
     sum()
 }
 

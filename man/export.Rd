@@ -4,7 +4,7 @@
 \alias{export}
 \title{Export Rota}
 \usage{
-export(file_path, x, solution, assign = 1)
+export(file_path, rota, assign = 1)
 }
 \arguments{
 \item{x}{}
