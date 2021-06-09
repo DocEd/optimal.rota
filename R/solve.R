@@ -181,6 +181,15 @@ inspect_consec <- function(x, df) {
   apply(x@solution, 1, function(x) c_consec(df$days[x]))
 }
 
+#' Fit Rota
+#'
+#' @param file_path 
+#' @param fellows 
+#' @param nhs 
+#' @param month 
+#'
+#' @return
+#' @export
 fit_rota <- function(
   file_path = NULL,
   fellows = c("matt", "muska", "zainab",
