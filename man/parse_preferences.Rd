@@ -5,18 +5,25 @@
 \title{Parse Preferences}
 \usage{
 parse_preferences(
-  file_path = NULL,
+  selections = NA_character_,
+  requirement = NA_character_,
   fellows = c("matt", "muska", "zainab", "dermot", "ed", "justin", "paul"),
   nhs = c(0, 0, 0, 1, 1, 0, 1),
   month = 1
 )
 }
 \arguments{
-\item{file_path}{a file path to the folder where prefernces are stored}
+\item{selections}{character vector of the file path to the selection file}
 
 \item{fellows}{a character vector containing the names of the fellows}
 
+\item{nhs}{integer vector in the same order as "fellows" indicating if
+certain fellows should be prioritised}
+
 \item{month}{an integer vector of length 1 detailing the month of interest}
+
+\item{requirements}{character vector of the file path to the requirements
+file}
 }
 \value{
 

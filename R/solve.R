@@ -1,7 +1,11 @@
 #' Parse Preferences
 #'
-#' @param file_path a file path to the folder where prefernces are stored
+#' @param selections character vector of the file path to the selection file
+#' @param requirements character vector of the file path to the requirements
+#'   file
 #' @param fellows a character vector containing the names of the fellows
+#' @param nhs integer vector in the same order as "fellows" indicating if
+#'   certain fellows should be prioritised
 #' @param month an integer vector of length 1 detailing the month of interest
 #'
 #' @importFrom magrittr `%>%`
@@ -10,7 +14,7 @@
 #' @importFrom dplyr select mutate across if_else
 #' @importFrom tidyselect everything contains all_of
 #' @importFrom lubridate days_in_month as_date
-#' 
+#'   
 #' @return
 #' @export
 #'
@@ -185,10 +189,13 @@ inspect_consec <- function(x, df) {
 
 #' Fit Rota
 #'
-#' @param file_path 
-#' @param fellows 
-#' @param nhs 
-#' @param month 
+#' @param selections character vector of the file path to the selection file
+#' @param requirements character vector of the file path to the requirements
+#'   file
+#' @param fellows a character vector containing the names of the fellows
+#' @param nhs integer vector in the same order as "fellows" indicating if
+#'   certain fellows should be prioritised
+#' @param month an integer vector of length 1 detailing the month of interest
 #'
 #' @return
 #' @export
