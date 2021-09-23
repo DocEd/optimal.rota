@@ -16,43 +16,45 @@
 #'
 #' @examples
 parse_preferences <- function(
-  file_path = NULL,
+  selections = NA_character_,
+  requirement = NA_character_,
   fellows = c("matt", "muska", "zainab",
               "dermot", "ed", "justin", "paul"),
   nhs = c(0, 0, 0, 1, 1, 0, 1),
   month = 1) {
-  
-  if (is.null(file_path)) {
-    abort("please enter a file path")
-  }
   
   fellows <- tolower(fellows)
   
   if (length(fellows) > 8) {
     abort("This code will need modifying to run with more than 8 fellows")
   }
-  
-  prefs <- list.files(file_path)
-  selections <- prefs[grepl("Select Preferences", prefs)]
-  requirement <- prefs[grepl("Work Requirment", prefs)]
-  
+
+  if (is.na(selections)) {
+    print("please choose the selections file")
+    selections <- file.choose()
+  }
+  if (is.na(requirement)) {
+    print("please choose the requirements file")
+    requirement <- file.choose()
+  }
+
   p_raw <- read_csv(
-    file = file.path(file_path, selections),
+    file = selections,
     col_types = paste0("D", paste0(rep("c", 8), collapse = ""))
   )
   
   names(p_raw) <- tolower(names(p_raw))
-
+  
   p_raw <- p_raw %>%
-    select(.data$x1, all_of(fellows))
+    select(.data$date, all_of(fellows))
   
   req <- read_csv(
-    file = file.path(file_path, requirement),
-    col_types = paste0("c", paste0(rep("i", 9), collapse = ""), "ccc")
+    file = requirement,
+    col_types = paste0("c", paste0(rep("i", 9), collapse = ""), "cc")
     )
-  
+
   names(req) <- tolower(names(req))
-  
+
   req <- req %>%
     select(all_of(fellows))
   
@@ -191,16 +193,18 @@ inspect_consec <- function(x, df) {
 #' @return
 #' @export
 fit_rota <- function(
-  file_path = NULL,
   fellows = c("matt", "muska", "zainab",
               "dermot", "justin",
               "paul"),
+  selections = NA_character_,
+  requirement = NA_character_,
   nhs = c(0, 0, 0, 1, 0, 1),
   month = 7) {
   
   df <- parse_preferences(
-    file_path = file_path,
     fellows = fellows,
+    selections = selections,
+    requirement = requirement,
     nhs = nhs, 
     month = month)
 
